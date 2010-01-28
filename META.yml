@@ -3,11 +3,17 @@ abstract: 'Authenticate against remote HTTP server'
 author:
   - 'Nigel Metheringham <nigelm@cpan.org>'
 build_requires:
+  Carp: 0
   Catalyst::Authentication::Store::Minimal: 0
+  Catalyst::Test: 0
   ExtUtils::MakeMaker: 6.42
   FindBin: 0
-  HTTP::Server::Simple: 0
+  HTTP::Request::AsCGI: 0
+  HTTP::Server::Simple::CGI: 0
+  MIME::Base64: 0
   Test::More: 0
+  Test::Pod: 0
+  Test::Pod::Coverage: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
@@ -22,12 +28,17 @@ no_index:
     - inc
     - t
 requires:
+  Catalyst: 0
+  Catalyst::Controller: 0
+  Catalyst::Exception: 0
   Catalyst::Runtime: 0
-  Class::Accessor::Fast: 0
-  Class::Inspector: 0
-  MRO::Compat: 0
-  perl: 5.8.0
+  LWP::UserAgent: 0
+  Moose: 0
+  MooseX::Types: 0
+  MooseX::Types::Moose: 0
+  namespace::autoclean: 0
+  perl: 5.8.5
 resources:
   license: http://dev.perl.org/licenses/
   repository: http://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP/
-version: 0.02
+version: 0.03
