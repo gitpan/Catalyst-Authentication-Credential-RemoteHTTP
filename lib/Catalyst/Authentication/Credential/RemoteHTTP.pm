@@ -1,4 +1,12 @@
 package Catalyst::Authentication::Credential::RemoteHTTP;
+BEGIN {
+  $Catalyst::Authentication::Credential::RemoteHTTP::AUTHORITY = 'cpan:NIGELM';
+}
+BEGIN {
+  $Catalyst::Authentication::Credential::RemoteHTTP::VERSION = '0.04';
+}
+
+# ABSTRACT: Authenticate against remote HTTP server
 
 use strict;
 use warnings;
@@ -8,18 +16,6 @@ use 5.008005;
 use Catalyst::Exception ();
 use Catalyst::Authentication::Credential::RemoteHTTP::UserAgent;
 use namespace::autoclean;
-
-=head1 NAME
-
-Catalyst::Authentication::Credential::RemoteHTTP - Authenticate against remote HTTP server
-
-=head1 VERSION
-
-Version 0.03
-
-=cut
-
-our $VERSION = '0.03';
 
 has realm => ( isa => Object, is => 'ro', required => 1 );
 
@@ -99,6 +95,22 @@ sub authenticate {
     return $user_obj;
 }
 
+
+1;    # End of Catalyst::Authentication::Credential::RemoteHTTP
+
+__END__
+=pod
+
+=encoding utf-8
+
+=head1 NAME
+
+Catalyst::Authentication::Credential::RemoteHTTP - Authenticate against remote HTTP server
+
+=head1 VERSION
+
+version 0.04
+
 =head1 SYNOPSIS
 
     use Catalyst qw/
@@ -126,7 +138,6 @@ source of authentication information, but are not able to
 conveniently use a networked authentication mechanism such as LDAP.
 
 =head1 CONFIGURATION
-
 
     # example
     __PACKAGE__->config(
@@ -234,7 +245,6 @@ the second argument.
 Try to log a user in, receives a hashref containing authentication information
 as the first argument, and the current context as the second.
 
-
 =head1 JUSTIFICATION
 
 Why would you use this module rather than one of the similar ones?
@@ -279,53 +289,6 @@ to set the correct domain for the authentication, unless the
 username as given to your application includes the domain
 information.
 
-
-=head1 AUTHOR
-
-Nigel Metheringham, C<< <nigelm at cpan.org> >>
-
-=head1 BUGS
-
-Please report any bugs or feature requests to
-C<bug-catalyst-authentication-credential-remotehttp at
-rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Catalyst-Authentication-Credential-RemoteHTTP>.
-I will be notified, and then you'll automatically be notified of
-progress on your bug as I make changes.
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Catalyst::Authentication::Credential::RemoteHTTP
-
-However, as you are reading this it is most likely that you are
-already aware of the documentation.
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Catalyst-Authentication-Credential-RemoteHTTP>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Catalyst-Authentication-Credential-RemoteHTTP>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Catalyst-Authentication-Credential-RemoteHTTP>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHTTP/>
-
-=back
-
-
 =head1 ACKNOWLEDGEMENTS
 
 Daisuke Murase <typester@cpan.org> - original
@@ -337,17 +300,41 @@ L<Catalyst::Authentication::Credential::Password>
 
 Tomas Doran (t0m) <t0m@state51.co.uk> - Fixups to best practice guidelines
 
-=head1 LICENSE AND COPYRIGHT
+=head1 AVAILABILITY
 
-Copyright 2010 Nigel Metheringham.
+The project homepage is L<http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHTTP>.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHTTP/>.
 
-See http://dev.perl.org/licenses/ for more information.
+The development version lives at L<http://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP>
+and may be cloned from L<git://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP>.
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
 
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests to bug-catalyst-authentication-credential-remotehttp@rt.cpan.org or through the web interface at:
+ http://rt.cpan.org/Public/Dist/Display.html?Name=Catalyst-Authentication-Credential-RemoteHTTP
+
+=head1 AUTHOR
+
+Nigel Metheringham <nigelm@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Nigel Metheringham <nigelm@cpan.org>.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
 
-1;    # End of Catalyst::Authentication::Credential::RemoteHTTP

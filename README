@@ -3,7 +3,7 @@ NAME
     remote HTTP server
 
 VERSION
-    Version 0.03
+    version 0.04
 
 SYNOPSIS
         use Catalyst qw/
@@ -160,47 +160,6 @@ NTLM NOTES
     the correct domain for the authentication, unless the username as given
     to your application includes the domain information.
 
-AUTHOR
-    Nigel Metheringham, "<nigelm at cpan.org>"
-
-BUGS
-    Please report any bugs or feature requests to
-    "bug-catalyst-authentication-credential-remotehttp at rt.cpan.org", or
-    through the web interface at
-    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Catalyst-Authentication-
-    Credential-RemoteHTTP>. I will be notified, and then you'll
-    automatically be notified of progress on your bug as I make changes.
-
-SUPPORT
-    You can find documentation for this module with the perldoc command.
-
-        perldoc Catalyst::Authentication::Credential::RemoteHTTP
-
-    However, as you are reading this it is most likely that you are already
-    aware of the documentation.
-
-    You can also look for information at:
-
-    *   RT: CPAN's request tracker
-
-        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Catalyst-Authentication-Cr
-        edential-RemoteHTTP>
-
-    *   AnnoCPAN: Annotated CPAN documentation
-
-        <http://annocpan.org/dist/Catalyst-Authentication-Credential-RemoteH
-        TTP>
-
-    *   CPAN Ratings
-
-        <http://cpanratings.perl.org/d/Catalyst-Authentication-Credential-Re
-        moteHTTP>
-
-    *   Search CPAN
-
-        <http://search.cpan.org/dist/Catalyst-Authentication-Credential-Remo
-        teHTTP/>
-
 ACKNOWLEDGEMENTS
     Daisuke Murase <typester@cpan.org> - original
     Catalyst::Plugin::Authentication::Store::HTTP used as the base for a
@@ -212,12 +171,44 @@ ACKNOWLEDGEMENTS
     Tomas Doran (t0m) <t0m@state51.co.uk> - Fixups to best practice
     guidelines
 
-LICENSE AND COPYRIGHT
-    Copyright 2010 Nigel Metheringham.
+AVAILABILITY
+    The project homepage is
+    <http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHT
+    TP>.
 
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of either: the GNU General Public License as published
-    by the Free Software Foundation; or the Artistic License.
+    The latest version of this module is available from the Comprehensive
+    Perl Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a
+    CPAN site near you, or see
+    <http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHT
+    TP/>.
 
-    See http://dev.perl.org/licenses/ for more information.
+    The development version lives at
+    <http://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP>
+    and may be cloned from
+    <git://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP>.
+    Instead of sending patches, please fork this project using the standard
+    git and github infrastructure.
+
+BUGS AND LIMITATIONS
+    No bugs have been reported.
+
+    Please report any bugs or feature requests through the web interface at
+    <http://rt.cpan.org>.
+
+BUGS
+    Please report any bugs or feature requests to
+    bug-catalyst-authentication-credential-remotehttp@rt.cpan.org or through
+    the web interface at:
+    http://rt.cpan.org/Public/Dist/Display.html?Name=Catalyst-Authentication
+    -Credential-RemoteHTTP
+
+AUTHOR
+    Nigel Metheringham <nigelm@cpan.org>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2010 by Nigel Metheringham
+    <nigelm@cpan.org>.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
 

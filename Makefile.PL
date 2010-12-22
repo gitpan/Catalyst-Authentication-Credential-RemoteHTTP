@@ -1,43 +1,67 @@
-use inc::Module::Install;
 
-if ( $Module::Install::AUTHOR ) {
-    system( 'pod2text lib/Catalyst/Authentication/Credential/RemoteHTTP.pm > README' )
-        and die;
+use strict;
+use warnings;
+
+BEGIN { require 5.008005; }
+
+use ExtUtils::MakeMaker 6.31;
+
+
+
+my %WriteMakefileArgs = (
+  'ABSTRACT' => 'Authenticate against remote HTTP server',
+  'AUTHOR' => 'Nigel Metheringham <nigelm@cpan.org>',
+  'BUILD_REQUIRES' => {
+    'Carp' => '0',
+    'Catalyst' => '0',
+    'Catalyst::Authentication::Store::Minimal' => '0',
+    'Catalyst::Controller' => '0',
+    'Catalyst::Test' => '0',
+    'HTTP::Server::Simple' => '0',
+    'HTTP::Server::Simple::CGI' => '0',
+    'IO::Socket::INET' => '0',
+    'MIME::Base64' => '0',
+    'Test::Exception' => '0',
+    'Test::More' => '0'
+  },
+  'CONFIGURE_REQUIRES' => {
+    'ExtUtils::MakeMaker' => '6.31'
+  },
+  'DISTNAME' => 'Catalyst-Authentication-Credential-RemoteHTTP',
+  'EXE_FILES' => [],
+  'LICENSE' => 'perl',
+  'NAME' => 'Catalyst::Authentication::Credential::RemoteHTTP',
+  'PREREQ_PM' => {
+    'Catalyst::Exception' => '0',
+    'LWP::UserAgent' => '0',
+    'Moose' => '0',
+    'MooseX::Types::Moose' => '0',
+    'namespace::autoclean' => '0'
+  },
+  'VERSION' => '0.04',
+  'test' => {
+    'TESTS' => 't/*.t'
+  }
+);
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
+  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
+  my $pp = $WriteMakefileArgs{PREREQ_PM};
+  for my $mod ( keys %$br ) {
+    if ( exists $pp->{$mod} ) {
+      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod};
+    }
+    else {
+      $pp->{$mod} = $br->{$mod};
+    }
+  }
 }
 
-name     'Catalyst-Authentication-Credential-RemoteHTTP';
-all_from 'lib/Catalyst/Authentication/Credential/RemoteHTTP.pm';
-author   q{Nigel Metheringham <nigelm@cpan.org>};
-license  'perl';
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
 
-requires 'Catalyst';
-requires 'Catalyst::Runtime';
-requires 'Catalyst::Controller';
-requires 'Catalyst::Exception';
-requires 'LWP::UserAgent';
-requires 'Moose';
-requires 'MooseX::Types';
-requires 'MooseX::Types::Moose';
-requires 'namespace::autoclean';
+WriteMakefile(%WriteMakefileArgs);
 
-test_requires 'Test::More';
-test_requires 'Carp';
-test_requires 'Catalyst::Authentication::Store::Minimal';
-test_requires 'Catalyst::Test';
-test_requires 'FindBin';
-test_requires 'HTTP::Request::AsCGI';
-test_requires 'HTTP::Server::Simple::CGI';
-test_requires 'MIME::Base64';
-test_requires 'Test::Pod';
-test_requires 'Test::Pod::Coverage';
 
-tests_recursive (qw|
-    t
-|);
 
-resources 'license'     => 'http://dev.perl.org/licenses/';
-resources 'repository'  => 'http://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP/';
-
-auto_install;
-
-WriteAll;
