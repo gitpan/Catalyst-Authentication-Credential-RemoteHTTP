@@ -1,10 +1,4 @@
 package Catalyst::Authentication::Credential::RemoteHTTP;
-BEGIN {
-  $Catalyst::Authentication::Credential::RemoteHTTP::AUTHORITY = 'cpan:NIGELM';
-}
-BEGIN {
-  $Catalyst::Authentication::Credential::RemoteHTTP::VERSION = '0.04';
-}
 
 # ABSTRACT: Authenticate against remote HTTP server
 
@@ -16,6 +10,9 @@ use 5.008005;
 use Catalyst::Exception ();
 use Catalyst::Authentication::Credential::RemoteHTTP::UserAgent;
 use namespace::autoclean;
+
+our $VERSION = '0.05'; # VERSION
+our $AUTHORITY = 'cpan:NIGELM'; # AUTHORITY
 
 has realm => ( isa => Object, is => 'ro', required => 1 );
 
@@ -29,7 +26,10 @@ has [qw/ user_prefix user_suffix /] => ( is => 'ro', default => '' );
 
 sub BUILDARGS {
     my ( $class, $config, $app, $realm ) = @_;
+
     $config->{realm} = $realm;
+    $config->{app}   = $app;
+    $config->{class} = $class;
     return $config;
 }
 
@@ -39,7 +39,7 @@ sub authenticate {
     my $username = $authinfo->{ $self->username_field };
     unless ( defined($username) ) {
         $c->log->debug("No username supplied")
-          if $c->debug;
+            if $c->debug;
         return;
     }
     ## we remove the password_field before we pass it to the user
@@ -50,16 +50,15 @@ sub authenticate {
 
     my $user_obj;
     $user_obj = $realm->find_user( $userfindauthinfo, $c )
-      unless ( $self->defer_find_user );
+        unless ( $self->defer_find_user );
 
     if ( ref($user_obj) || $self->defer_find_user ) {
         my $ua =
-          Catalyst::Authentication::Credential::RemoteHTTP::UserAgent->new(
+            Catalyst::Authentication::Credential::RemoteHTTP::UserAgent->new(
             keep_alive => $self->http_keep_alive ? 1 : 0 );
 
         # add prefix/suffix to user data to make auth_user, get password
-        my $auth_user = sprintf( '%s%s%s', $self->user_prefix, $username,
-            $self->user_suffix );
+        my $auth_user = sprintf( '%s%s%s', $self->user_prefix, $username, $self->user_suffix );
         my $password = $authinfo->{ $self->password_field };
         $ua->set_credentials( $auth_user, $password );
 
@@ -71,25 +70,24 @@ sub authenticate {
 
             # TODO: should we check here that it was actually authenticated?
             # this could be done by ensuring there is a request chain...
-            $c->log->debug(
-                "remote http auth succeeded for user " . $auth_user )
-              if $c->debug;
+            $c->log->debug( "remote http auth succeeded for user " . $auth_user )
+                if $c->debug;
         }
         else {
             $c->log->debug( "remote http auth FAILED for user " . $auth_user )
-              if $c->debug;
+                if $c->debug;
             return;
         }
     }
 
     # get the user object now, if deferred before
     $user_obj = $realm->find_user( $userfindauthinfo, $c )
-      if ( $self->defer_find_user );
+        if ( $self->defer_find_user );
 
     # deal with no-such-user in store
     unless ( ref($user_obj) ) {
         $c->log->debug("Unable to locate user matching user info provided")
-          if $c->debug;
+            if $c->debug;
         return;
     }
     return $user_obj;
@@ -101,7 +99,7 @@ sub authenticate {
 __END__
 =pod
 
-=encoding utf-8
+=for stopwords ACKNOWLEDGEMENTS Daisuke Fixups LDAP Murase NTLM classname http ie linux url validator
 
 =head1 NAME
 
@@ -109,15 +107,15 @@ Catalyst::Authentication::Credential::RemoteHTTP - Authenticate against remote H
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
+
+    package MyApp::Controller::Auth;
 
     use Catalyst qw/
       Authentication
       /;
-
-    package MyApp::Controller::Auth;
 
     sub login : Local {
         my ( $self, $c ) = @_;
@@ -268,7 +266,7 @@ There are a number of issues relating to NTLM authentication.  In
 particular the supporting modules can be rather picky.  To make NTLM
 authentication work you must have an installed copy of libwww-perl
 that includes L<LWP::Authen::Ntlm> (some linux distributions may drop
-this component as it gives you additional dependancy requirements over
+this component as it gives you additional dependency requirements over
 the basic L<LWP> package).
 
 Additionally you require L<Authen::NTLM> of version 1.02 or later.
@@ -279,7 +277,7 @@ Finally, if you are using L<NTLM-1.02> then you need to apply the
 patch described in RT entry 9521
 L<http://rt.cpan.org/Ticket/Display.html?id=9521>.
 
-When using NTLM authenication the configuration option
+When using NTLM authentication the configuration option
 C<http_keep_alive> must be set true - otherwise the session to the
 remote server is not maintained and the authentication nonce will
 be lost between sessions.
@@ -300,30 +298,22 @@ L<Catalyst::Authentication::Credential::Password>
 
 Tomas Doran (t0m) <t0m@state51.co.uk> - Fixups to best practice guidelines
 
-=head1 AVAILABILITY
+=head1 INSTALLATION
 
-The project homepage is L<http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHTTP>.
-
-The latest version of this module is available from the Comprehensive Perl
-Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
-site near you, or see L<http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHTTP/>.
-
-The development version lives at L<http://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP>
-and may be cloned from L<git://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP>.
-Instead of sending patches, please fork this project using the standard
-git and github infrastructure.
+See perlmodinstall for information and options on installing Perl modules.
 
 =head1 BUGS AND LIMITATIONS
 
-No bugs have been reported.
+You can make new bug reports, and view existing ones, through the
+web interface at L<http://rt.cpan.org/Public/Dist/Display.html?Name=Catalyst-Authentication-Credential-RemoteHTTP>.
 
-Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
+=head1 AVAILABILITY
 
-=head1 BUGS
+The project homepage is L<https://metacpan.org/release/Catalyst-Authentication-Credential-RemoteHTTP>.
 
-Please report any bugs or feature requests to bug-catalyst-authentication-credential-remotehttp@rt.cpan.org or through the web interface at:
- http://rt.cpan.org/Public/Dist/Display.html?Name=Catalyst-Authentication-Credential-RemoteHTTP
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<https://metacpan.org/module/Catalyst::Authentication::Credential::RemoteHTTP/>.
 
 =head1 AUTHOR
 
@@ -331,7 +321,7 @@ Nigel Metheringham <nigelm@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Nigel Metheringham <nigelm@cpan.org>.
+This software is copyright (c) 2012 by Nigel Metheringham <nigelm@cpan.org>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

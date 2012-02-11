@@ -3,14 +3,14 @@ NAME
     remote HTTP server
 
 VERSION
-    version 0.04
+    version 0.05
 
 SYNOPSIS
+        package MyApp::Controller::Auth;
+
         use Catalyst qw/
           Authentication
           /;
-
-        package MyApp::Controller::Auth;
 
         sub login : Local {
             my ( $self, $c ) = @_;
@@ -141,7 +141,7 @@ NTLM NOTES
     particular the supporting modules can be rather picky. To make NTLM
     authentication work you must have an installed copy of libwww-perl that
     includes LWP::Authen::Ntlm (some linux distributions may drop this
-    component as it gives you additional dependancy requirements over the
+    component as it gives you additional dependency requirements over the
     basic LWP package).
 
     Additionally you require Authen::NTLM of version 1.02 or later. There
@@ -152,9 +152,10 @@ NTLM NOTES
     described in RT entry 9521
     <http://rt.cpan.org/Ticket/Display.html?id=9521>.
 
-    When using NTLM authenication the configuration option "http_keep_alive"
-    must be set true - otherwise the session to the remote server is not
-    maintained and the authentication nonce will be lost between sessions.
+    When using NTLM authentication the configuration option
+    "http_keep_alive" must be set true - otherwise the session to the remote
+    server is not maintained and the authentication nonce will be lost
+    between sessions.
 
     You may also need to set "username_prefix" or "username_suffix" to set
     the correct domain for the authentication, unless the username as given
@@ -171,42 +172,32 @@ ACKNOWLEDGEMENTS
     Tomas Doran (t0m) <t0m@state51.co.uk> - Fixups to best practice
     guidelines
 
+INSTALLATION
+    See perlmodinstall for information and options on installing Perl
+    modules.
+
+BUGS AND LIMITATIONS
+    You can make new bug reports, and view existing ones, through the web
+    interface at
+    <http://rt.cpan.org/Public/Dist/Display.html?Name=Catalyst-Authenticatio
+    n-Credential-RemoteHTTP>.
+
 AVAILABILITY
     The project homepage is
-    <http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHT
-    TP>.
+    <https://metacpan.org/release/Catalyst-Authentication-Credential-RemoteH
+    TTP>.
 
     The latest version of this module is available from the Comprehensive
     Perl Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a
     CPAN site near you, or see
-    <http://search.cpan.org/dist/Catalyst-Authentication-Credential-RemoteHT
-    TP/>.
-
-    The development version lives at
-    <http://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP>
-    and may be cloned from
-    <git://github.com/nigelm/Catalyst-Authentication-Credential-RemoteHTTP>.
-    Instead of sending patches, please fork this project using the standard
-    git and github infrastructure.
-
-BUGS AND LIMITATIONS
-    No bugs have been reported.
-
-    Please report any bugs or feature requests through the web interface at
-    <http://rt.cpan.org>.
-
-BUGS
-    Please report any bugs or feature requests to
-    bug-catalyst-authentication-credential-remotehttp@rt.cpan.org or through
-    the web interface at:
-    http://rt.cpan.org/Public/Dist/Display.html?Name=Catalyst-Authentication
-    -Credential-RemoteHTTP
+    <https://metacpan.org/module/Catalyst::Authentication::Credential::Remot
+    eHTTP/>.
 
 AUTHOR
     Nigel Metheringham <nigelm@cpan.org>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2010 by Nigel Metheringham
+    This software is copyright (c) 2012 by Nigel Metheringham
     <nigelm@cpan.org>.
 
     This is free software; you can redistribute it and/or modify it under
